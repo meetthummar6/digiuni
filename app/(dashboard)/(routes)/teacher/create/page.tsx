@@ -37,7 +37,8 @@ const CreatePage = () => {
     const onSubmit = async(values: z.infer<typeof formSchema>) => {
        try{
         const res=await axios.post("/api/courses", values)
-        router.push(`/teacher/courses/${res.data.id}`)
+        router.push(`/teacher/courses/${res.data[0].id}`)
+        toast.success("Course created")
        }catch{
         toast.error("Something went wrong")
        }
@@ -46,7 +47,7 @@ const CreatePage = () => {
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
         <div>
-            <h1 className="text-2xl">
+            <h1 className="text-2xl font-semibold">
                 Name your Course
             </h1>
             <p className="text-sm text-slate-600">
@@ -61,7 +62,7 @@ const CreatePage = () => {
                         name="title"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Course Title</FormLabel>
+                                <FormLabel className="text-md">Course Title</FormLabel>
                                 <FormControl>
                                     <Input 
                                     disabled={isSubmitting}
@@ -84,7 +85,7 @@ const CreatePage = () => {
                                  Cancel
                             </Button>
                         </Link>
-                        <Button type="submit" disabled={!isValid || isSubmitting}>
+                        <Button type="submit" disabled={!isValid || isSubmitting} variant={"bluebutton"}>
                             Continue
                         </Button>
                     </div>
